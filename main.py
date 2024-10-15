@@ -32,10 +32,10 @@ import openai
 # os.chdir(script_dir)
 
 # Set Streamlit page configuration
-st.set_page_config(page_title="Consensus Lens", layout="centered")
+st.set_page_config(page_title="Popular Topic Finder", layout="centered")
 
 # Streamlit app title
-st.markdown("<h1 style='text-align: center;'>Consensus Lens</h1>", unsafe_allow_html=True)
+st.markdown("<h1 style='text-align: center;'>Popular Topic Finder</h1>", unsafe_allow_html=True)
 
 # Description
 st.markdown("""
@@ -46,10 +46,10 @@ st.markdown("""
 """)
 
 # Input field for the Reddit URL
-url = st.text_input("Enter the Reddit Post URL")
+url = st.text_input("Enter the URL")
 
 # Input field for the number of top models to analyze
-top_n = st.number_input("Number of top models to display:", min_value=1, max_value=50, value=10)
+top_n = st.number_input("Specify the number of top results you'd like to display:", min_value=1, max_value=50, value=10)
 
 # Button to start the scraping and model extraction
 if st.button("Analyse"):

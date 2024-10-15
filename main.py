@@ -80,7 +80,7 @@ if st.button("Analyse"):
         my_client_secret = st.secrets["my_client_secret"]
         my_user_agent = st.secrets["my_user_agent"]
 
-        reddit_df, reddit_topic = scrape_reddit(url, my_client_id, my_client_secret, my_user_agent)
+        reddit_df = scrape_reddit(url, my_client_id, my_client_secret, my_user_agent)
         reddit_df.columns = ['data']  # Ensure consistency by renaming the column to 'data'
 
         # reddit_df.to_csv(scraped_csv, index=False)

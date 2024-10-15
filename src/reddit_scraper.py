@@ -26,7 +26,7 @@ def scrape_reddit(url, my_client_id, my_client_secret, my_user_agent):
 
     # Create dataframe
     reddit_df = pd.DataFrame(comments, columns=['data'])
-    return reddit_df, full_topic
+    return reddit_df
 
 if __name__ == "__main__":
     url = 'https://www.reddit.com/r/datascience/comments/xvhiml/professional_data_scientists_what_are_the/'

@@ -6,3 +6,8 @@ wordcloud
 openai
 langchain
 praw
+langchain
+langchain_community
+langchain_core
+langchain_text_splitters
+langchain-huggingface

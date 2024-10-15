@@ -18,8 +18,8 @@ def initialize_llm():
     # {text}
     # """
     prompt_template = """
-    You are an expert in extracting relevant recommendations and suggestions mentioned in discussions on various topics.
-    For each comment below, identify and list the key recommendations or suggestions mentioned.
+    You are an expert in extracting travel recommendations based on discussions about the best countries to visit. 
+    For each comment below, identify and list the key recommendations for countries worth visiting. 
     For each comment, provide a list in this format:
     'Comment X: [list of recommendations/suggestions]'
     

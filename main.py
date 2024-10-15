@@ -93,7 +93,7 @@ if st.button("Analyse"):
         openai.api_key = st.secrets["OPENAI_API_KEY"]
 
         # Extract insights on models commonly used
-        top_consensus, model_count = extract_model_insights(cleaned_df, batch_size=10, top_n=top_n)
+        top_consensus, model_count = extract_model_insights(cleaned_df, reddit_topic, batch_size=10, top_n=10)
 
         # Convert the top models with percentage to a DataFrame
         visual_df = pd.DataFrame(top_consensus, columns=['Model', 'Count'])

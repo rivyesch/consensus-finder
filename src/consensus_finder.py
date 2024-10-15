@@ -57,7 +57,7 @@ def extract_model_insights(cleaned_df, reddit_topic, batch_size=10, top_n=10):
     # Batch process comments for model extraction
     comment_batches = batch_comments(cleaned_df, batch_size=batch_size)
     for batch in comment_batches:
-        models_from_batch = extract_models_from_batch(llm_chain, batch)
+        models_from_batch = extract_models_from_batch(llm_chain, batch, reddit_topic)
         batch_results = models_from_batch.split('\n')
 
         # Extract models for each comment

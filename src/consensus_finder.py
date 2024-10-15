@@ -19,14 +19,14 @@ def initialize_llm():
     # """
     prompt_template = """
     You are an expert in extracting relevant recommendations and suggestions mentioned in discussions on various topics.
-    For each comment below related to '{topic}', identify and list the key recommendations or suggestions mentioned.
+    For each comment below, identify and list the key recommendations or suggestions mentioned.
     For each comment, provide a list in this format:
     'Comment X: [list of recommendations/suggestions]'
     
     Here are the comments:
     {text}
     """
-    prompt = PromptTemplate(text=['text', 'topic'], template=prompt_template)
+    prompt = PromptTemplate(text=['text'], template=prompt_template)
     return LLMChain(llm=llm, prompt=prompt)
 
 # Function to batch comments for processing
@@ -35,9 +35,9 @@ def batch_comments(comments, batch_size=10):
         yield comments[i:i + batch_size]
 
 # Function to extract models from a batch of comments
-def extract_models_from_batch(llm_chain, comment_batch, topic):
+def extract_models_from_batch(llm_chain, comment_batch):
     comments_str = "\n".join([f"Comment {i+1}: {comment}" for i, comment in enumerate(comment_batch)])
-    response = llm_chain.run({"text": comments_str, "topic": topic})
+    response = llm_chain.run({"text": comments_str})
     return response.strip()
 
 # Function to clean and normalize the extracted model names
@@ -50,7 +50,7 @@ def normalize_model_names(model_list):
     return cleaned_models
 
 # Main extraction function to find the most mentioned models
-def extract_model_insights(cleaned_df, reddit_topic, batch_size=10, top_n=10):
+def extract_model_insights(cleaned_df, batch_size=10, top_n=10):
     llm_chain = initialize_llm()
     all_models = []
 
@@ -58,7 +58,7 @@ def extract_model_insights(cleaned_df, reddit_topic, batch_size=10, top_n=10):
     comment_batches = batch_comments(cleaned_df, batch_size=batch_size)
     for batch in comment_batches:
         # Correctly include reddit_topic in the function call
-        models_from_batch = extract_models_from_batch(llm_chain, batch, topic=reddit_topic)
+        models_from_batch = extract_models_from_batch(llm_chain, batch)
         batch_results = models_from_batch.split('\n')
 
         # Extract models for each comment

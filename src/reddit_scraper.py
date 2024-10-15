@@ -15,8 +15,8 @@ def scrape_reddit(url, my_client_id, my_client_secret, my_user_agent):
 
     # Extract the topic from the title and subreddit
     topic = submission.title
-    subreddit = submission.subreddit.display_name
-    full_topic = f"{topic} in r/{subreddit}"
+    # subreddit = submission.subreddit.display_name
+    # full_topic = f"{topic} in r/{subreddit}"
 
     submission.comments.replace_more(limit=None)
 

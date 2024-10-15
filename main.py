@@ -39,7 +39,7 @@ st.markdown("<h1 style='text-align: center;'>Popular Topic Finder</h1>", unsafe_
 
 # Description
 st.markdown("""
-**ConsensusFinder** is a versatile web app designed to extract and visualise key insights from discussion forums and community data. 
+**Popular Topic Finder** is a versatile web app designed to extract and visualise key insights from discussion forums and community data. 
             Whether you're analyzing popular AI models, top travel destinations, or the most recommended restaurants, ConsensusFinder 
             helps you discover the most frequently mentioned topics, trends, and recommendations from any source, providing actionable 
             insights in an easy-to-digest format.

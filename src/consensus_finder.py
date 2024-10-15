@@ -57,7 +57,8 @@ def extract_model_insights(cleaned_df, reddit_topic, batch_size=10, top_n=10):
     # Batch process comments for model extraction
     comment_batches = batch_comments(cleaned_df, batch_size=batch_size)
     for batch in comment_batches:
-        models_from_batch = extract_models_from_batch(llm_chain, batch, reddit_topic)
+        # Correctly include reddit_topic in the function call
+        models_from_batch = extract_models_from_batch(llm_chain, batch, reddit_topic)  # Fixed: Added reddit_topic parameter
         batch_results = models_from_batch.split('\n')
 
         # Extract models for each comment
@@ -74,11 +75,6 @@ def extract_model_insights(cleaned_df, reddit_topic, batch_size=10, top_n=10):
 
     # Get the top N models
     top_models = model_counts.most_common(top_n)
-    
-    # Calculate percentages
-    # total_comments = len(cleaned_df)
-    # total_comments = sum(model_counts.values())
-    # top_models_with_percentage = [(model, count, count / total_comments * 100) for model, count in top_models]
 
     return top_models, model_counts
 

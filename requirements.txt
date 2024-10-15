@@ -1,0 +1,8 @@
+pandas
+streamlit
+matplotlib
+seaborn
+wordcloud
+openai
+langchain
+praw

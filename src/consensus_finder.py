@@ -8,16 +8,25 @@ from langchain.chat_models import ChatOpenAI
 # Initialize the OpenAI model
 def initialize_llm():
     llm = ChatOpenAI(model="gpt-4o-mini")
+    # prompt_template = """
+    # You are an expert in identifying data science models and algorithms, including machine learning and statistical techniques mentioned in text.
+    # For each comment below, extract all the data science models and algorithms mentioned.
+    # For each comment, provide a list of models or algorithms in this format:
+    # 'Comment X: [list of models/algorithms]'
+    
+    # Here are the comments:
+    # {text}
+    # """
     prompt_template = """
-    You are an expert in identifying data science models and algorithms, including machine learning and statistical techniques mentioned in text.
-    For each comment below, extract all the data science models and algorithms mentioned.
-    For each comment, provide a list of models or algorithms in this format:
-    'Comment X: [list of models/algorithms]'
+    You are an expert in extracting relevant recommendations and suggestions mentioned in discussions on various topics.
+    For each comment below related to '{topic}', identify and list the key recommendations or suggestions mentioned.
+    For each comment, provide a list in this format:
+    'Comment X: [list of recommendations/suggestions]'
     
     Here are the comments:
     {text}
     """
-    prompt = PromptTemplate(input_variables=['text'], template=prompt_template)
+    prompt = PromptTemplate(text=['text', 'topic'], template=prompt_template)
     return LLMChain(llm=llm, prompt=prompt)
 
 # Function to batch comments for processing
@@ -26,9 +35,9 @@ def batch_comments(comments, batch_size=10):
         yield comments[i:i + batch_size]
 
 # Function to extract models from a batch of comments
-def extract_models_from_batch(llm_chain, comment_batch):
+def extract_models_from_batch(llm_chain, comment_batch, topic):
     comments_str = "\n".join([f"Comment {i+1}: {comment}" for i, comment in enumerate(comment_batch)])
-    response = llm_chain.run({"text": comments_str})
+    response = llm_chain.run({"text": comments_str, "topic": topic})
     return response.strip()
 
 # Function to clean and normalize the extracted model names
@@ -41,7 +50,7 @@ def normalize_model_names(model_list):
     return cleaned_models
 
 # Main extraction function to find the most mentioned models
-def extract_model_insights(cleaned_df, batch_size=10, top_n=10):
+def extract_model_insights(cleaned_df, reddit_topic, batch_size=10, top_n=10):
     llm_chain = initialize_llm()
     all_models = []
 

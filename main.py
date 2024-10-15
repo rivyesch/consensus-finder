@@ -40,8 +40,8 @@ st.markdown("<h1 style='text-align: center;'>Popular Topic Finder</h1>", unsafe_
 # Description
 st.markdown("""
 **Popular Topic Finder** is a versatile web app designed to extract and visualise key insights from discussion forums and community data. 
-            Whether you're analyzing popular AI models, top travel destinations, or the most recommended restaurants, ConsensusFinder 
-            helps you discover the most frequently mentioned topics, trends, and recommendations from any source, providing actionable 
+            Whether you're analyzing popular AI models, top travel destinations, or the most recommended restaurants, Popular Topic Finder 
+            helps you discover the most frequently mentioned topics, and highlights what's popular or trending from any source, providing 
             insights in an easy-to-digest format.
 """)
 
@@ -80,8 +80,9 @@ if st.button("Analyse"):
         my_client_secret = st.secrets["my_client_secret"]
         my_user_agent = st.secrets["my_user_agent"]
 
-        reddit_df = scrape_reddit(url, my_client_id, my_client_secret, my_user_agent)
+        reddit_df, reddit_topic = scrape_reddit(url, my_client_id, my_client_secret, my_user_agent)
         reddit_df.columns = ['data']  # Ensure consistency by renaming the column to 'data'
+
         # reddit_df.to_csv(scraped_csv, index=False)
         # st.write(f"Data scraped and saved to {scraped_csv}")
         
@@ -101,7 +102,8 @@ if st.button("Analyse"):
         visual_df = visual_df.sort_values(by='Count', ascending=False)
 
         # --- 1. Word Cloud: Model Frequency ---
-        st.subheader('Word Cloud of Data Science Models')
+        # st.subheader('Word Cloud of Data Science Models')
+        st.subheader(f"Word Cloud of Most Frequently Mentioned Terms in Discussion")
 
         # Create a dictionary from the model counts for the word cloud
         model_dict = {model: count for model, count in model_count.items()}
@@ -119,7 +121,8 @@ if st.button("Analyse"):
         st.pyplot(plt)
 
         # --- 2. Bar Chart: Top Models ---
-        st.subheader(f"Top {len(top_consensus)} Most Common Data Science Models/Algorithms")
+        # st.subheader(f"Top {len(top_consensus)} Most Common Data Science Models/Algorithms")
+        st.subheader(f"Top {len(top_consensus)} Most Popular Choices in Discussion")
 
         plt.figure(figsize=(10, 6))
         sns.barplot(x='Count', y='Model', data=visual_df, palette='viridis')  # Using a vibrant palette

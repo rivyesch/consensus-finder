@@ -29,7 +29,7 @@ def initialize_llm():
     
     Your task is to analyze the comments provided and extract specific recommendations or mentions based on the topic. For each comment:
     1. If relevant suggestions or recommendations are mentioned, list them explicitly.
-    2. If the comment does not contain any relevant suggestions or is unrelated to the topic, indicate this clearly as 'No relevant suggestions'.
+    2. If the comment does not contain any relevant suggestions or is unrelated to the topic skip that comment and move on to the next comment.
     
     Format your response as follows:
     - Comment X: [list of recommendations/suggestions] 

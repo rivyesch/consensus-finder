@@ -75,9 +75,9 @@ def extract_model_insights(cleaned_df, subreddit, topic, batch_size=10, top_n=10
         models_from_batch = extract_models_from_batch(llm_chain, batch, subreddit, topic)
         batch_results = models_from_batch.split('\n')
 
-        # Extract models for each comment
+        # Process results, filtering out "No relevant suggestions"
         for result in batch_results:
-            if 'Comment' in result:
+            if 'Comment' in result and 'No relevant suggestions' not in result:
                 models = result.split(':')[1].strip().split(',')
                 all_models.extend([model.strip() for model in models if model])
 

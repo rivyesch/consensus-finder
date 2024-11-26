@@ -81,6 +81,8 @@ def extract_model_insights(cleaned_df, subreddit, topic, batch_size=10, top_n=10
                 models = result.split(':')[1].strip().split(',')
                 all_models.extend([model.strip() for model in models if model])
 
+    print(all_models)
+    
     # Clean and normalize model names
     cleaned_all_models = normalize_model_names(all_models)
 

@@ -77,12 +77,12 @@ def extract_model_insights(cleaned_df, subreddit, topic, batch_size=10, top_n=10
 
         # Process results, filtering out "No relevant suggestions"
         for result in batch_results:
-            if 'Comment' in result and 'No relevant suggestions' not in result:
+            if 'Comment' in result and 'no relevant suggestions' not in result:
                 models = result.split(':')[1].strip().split(',')
                 all_models.extend([model.strip() for model in models if model])
 
-    print(all_models)
-    
+    # print(all_models)
+
     # Clean and normalize model names
     cleaned_all_models = normalize_model_names(all_models)
 

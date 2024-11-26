@@ -1,8 +1,9 @@
 # The main script to run the entire pipeline.
 
-from src.reddit_scraper import scrape_reddit
+from src.reddit_scraper import scrape_reddit, scrape_reddit_info
 from src.reddit_cleaner import clean_data
 from src.consensus_finder import extract_model_insights
+
 
 import pandas as pd
 import hashlib
@@ -83,6 +84,8 @@ if st.button("Analyse"):
         reddit_df = scrape_reddit(url, my_client_id, my_client_secret, my_user_agent)
         reddit_df.columns = ['data']  # Ensure consistency by renaming the column to 'data'
 
+        topic, subreddit = scrape_reddit_info(url, my_client_id, my_client_secret, my_user_agent)
+
         # reddit_df.to_csv(scraped_csv, index=False)
         # st.write(f"Data scraped and saved to {scraped_csv}")
         
@@ -93,7 +96,7 @@ if st.button("Analyse"):
         openai.api_key = st.secrets["OPENAI_API_KEY"]
 
         # Extract insights on models commonly used
-        top_consensus, model_count = extract_model_insights(cleaned_df, batch_size=50, top_n=top_n)
+        top_consensus, model_count = extract_model_insights(cleaned_df, subreddit, topic, batch_size=50, top_n=top_n)
 
         # Convert the top models with percentage to a DataFrame
         visual_df = pd.DataFrame(top_consensus, columns=['Model', 'Count'])

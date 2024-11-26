@@ -103,6 +103,7 @@ if st.button("Analyse"):
         
         # Sort by Count in descending order
         visual_df = visual_df.sort_values(by='Count', ascending=False)
+        print(visual_df)
 
         # --- 1. Word Cloud: Model Frequency ---
         # st.subheader('Word Cloud of Data Science Models')
